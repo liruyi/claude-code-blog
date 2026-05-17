@@ -1,0 +1,64 @@
+---
+import Layout from '../components/Layout.astro'
+import SeriesNav from '../components/SeriesNav.astro'
+import { getSeriesMeta } from '../utils/series'
+
+interface Props {
+  title: string
+  description: string
+  publishDate: Date
+  readingTime?: string
+  series: string
+  slug: string
+}
+
+const { title, description, publishDate, readingTime, series, slug } = Astro.props
+const seriesMeta = getSeriesMeta(series)
+const base = import.meta.env.BASE_URL
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+---
+
+<Layout title={title} description={description}>
+  <article class="max-w-6xl mx-auto px-4 py-8 lg:py-12">
+    <div class="lg:flex lg:gap-8">
+      <SeriesNav currentSeries={series} currentSlug={slug} />
+
+      <div class="flex-1 min-w-0 max-w-3xl">
+        <header class="mb-8">
+          <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
+            <a
+              href={`${base}/${series}`}
+              class="hover:text-primary"
+              style={`color: ${seriesMeta?.color};`}
+            >
+              {seriesMeta?.title}
+            </a>
+            <span>·</span>
+            <time datetime={publishDate.toISOString()}>
+              {formatDate(publishDate)}
+            </time>
+            {readingTime && (
+              <>
+                <span>·</span>
+                <span>{readingTime}</span>
+              </>
+            )}
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight">
+            {title}
+          </h1>
+          <p class="text-lg text-slate-600 dark:text-slate-400 mt-4">
+            {description}
+          </p>
+        </header>
+
+        <div class="prose max-w-none">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

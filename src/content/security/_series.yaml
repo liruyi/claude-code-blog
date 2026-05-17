@@ -1,0 +1,5 @@
+id: security
+title: "Claude Code 安全模型"
+description: "权限系统、沙箱执行与企业安全部署"
+color: "#dc2626"
+order: 4

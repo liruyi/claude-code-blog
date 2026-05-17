@@ -1,0 +1,37 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro'
+import { getCollection } from 'astro:content'
+import { isValidSeries } from '../../utils/series'
+
+export async function getStaticPaths() {
+  const seriesIds = ['blog', 'extension', 'performance', 'security', 'ux']
+  const paths = []
+
+  for (const seriesId of seriesIds) {
+    const articles = await getCollection(seriesId)
+    for (const article of articles) {
+      paths.push({
+        params: { series: seriesId, slug: article.slug },
+      })
+    }
+  }
+
+  return paths
+}
+
+const { series, slug } = Astro.params
+const collection = await getCollection(series)
+const article = collection.find(a => a.slug === slug)
+const { Content } = await article.render()
+---
+
+<ArticleLayout
+  title={article.data.title}
+  description={article.data.description}
+  publishDate={article.data.publishDate}
+  readingTime={article.data.readingTime}
+  series={series}
+  slug={slug}
+>
+  <Content />
+</ArticleLayout>

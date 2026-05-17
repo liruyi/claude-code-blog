@@ -1,0 +1,5 @@
+id: performance
+title: "Claude Code 性能优化"
+description: "从启动优化到内存管理的性能哲学"
+color: "#059669"
+order: 3

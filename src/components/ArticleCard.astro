@@ -1,0 +1,43 @@
+---
+import { getSeriesMeta } from '../utils/series'
+
+interface Props {
+  title: string
+  description: string
+  publishDate: Date
+  series: string
+  slug: string
+}
+
+const { title, description, publishDate, series, slug } = Astro.props
+const seriesMeta = getSeriesMeta(series)
+const base = import.meta.env.BASE_URL
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+---
+
+<a
+  href={`${base}/${series}/${slug}`}
+  class="group block p-6 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-md transition-all"
+>
+  <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
+    <time datetime={publishDate.toISOString()}>
+      {formatDate(publishDate)}
+    </time>
+    <span>·</span>
+    <span
+      class="px-2 py-0.5 rounded-full text-white text-xs"
+      style={`background-color: ${seriesMeta?.color};`}
+    >
+      {seriesMeta?.title.replace('Claude Code ', '')}
+    </span>
+  </div>
+  <h3 class="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">
+    {title}
+  </h3>
+  <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+    {description}
+  </p>
+</a>

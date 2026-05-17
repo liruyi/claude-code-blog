@@ -1,0 +1,49 @@
+---
+import Layout from '../components/Layout.astro'
+import Hero from '../components/Hero.astro'
+import SeriesCard from '../components/SeriesCard.astro'
+import ArticleCard from '../components/ArticleCard.astro'
+import { getAllArticles, getAllSeriesMeta, getSeriesArticles } from '../utils/series'
+
+const seriesList = getAllSeriesMeta()
+const allArticles = await getAllArticles()
+const recentArticles = allArticles.slice(0, 10)
+
+const seriesCounts: Record<string, number> = {}
+for (const series of seriesList) {
+  const articles = await getSeriesArticles(series.id)
+  seriesCounts[series.id] = articles.length
+}
+---
+
+<Layout title="首页">
+  <Hero />
+
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
+      系列专栏
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      {seriesList.map((series) => (
+        <SeriesCard series={series} articleCount={seriesCounts[series.id]} />
+      ))}
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
+      最新文章
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {recentArticles.map((article) => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          publishDate={article.data.publishDate}
+          series={article.collection}
+          slug={article.slug}
+        />
+      ))}
+    </div>
+  </section>
+</Layout>

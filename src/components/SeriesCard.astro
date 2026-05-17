@@ -1,0 +1,35 @@
+---
+import type { SeriesMeta } from '../utils/series'
+
+interface Props {
+  series: SeriesMeta
+  articleCount: number
+}
+
+const { series, articleCount } = Astro.props
+const base = import.meta.env.BASE_URL
+---
+
+<a
+  href={`${base}/${series.id}`}
+  class="group block p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-lg transition-all"
+>
+  <div
+    class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center"
+    style={`background-color: ${series.color}20;`}
+  >
+    <div
+      class="w-6 h-6 rounded"
+      style={`background-color: ${series.color};`}
+    ></div>
+  </div>
+  <h3 class="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">
+    {series.title}
+  </h3>
+  <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+    {series.description}
+  </p>
+  <div class="text-xs text-slate-500 dark:text-slate-500 mt-4">
+    {articleCount} 篇文章
+  </div>
+</a>

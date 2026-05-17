@@ -1,0 +1,26 @@
+---
+import Layout from '../components/Layout.astro'
+const base = import.meta.env.BASE_URL
+---
+
+<Layout title="搜索">
+  <section class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-8">
+      搜索文章
+    </h1>
+
+    <link href={`${base}/pagefind/pagefind-ui.css`} rel="stylesheet" />
+    <div id="search" class="mb-8"></div>
+    <script src={`${base}/pagefind/pagefind-ui.js`} is:inline></script>
+    <script is:inline define:vars={{ base }}>
+      window.addEventListener('DOMContentLoaded', () => {
+        new PagefindUI({
+          element: '#search',
+          showSubResults: true,
+          showImages: false,
+          basePath: `${base}/pagefind/`,
+        });
+      });
+    </script>
+  </section>
+</Layout>

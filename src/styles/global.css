@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100;
+  }
+
+  .prose {
+    @apply text-slate-700 dark:text-slate-300;
+  }
+
+  .prose h1 {
+    @apply text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-semibold text-slate-800 dark:text-slate-200 mt-8 mb-4;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold text-slate-700 dark:text-slate-300 mt-6 mb-3;
+  }
+
+  .prose p {
+    @apply leading-relaxed mb-4;
+  }
+
+  .prose a {
+    @apply text-primary hover:underline;
+  }
+
+  .prose pre {
+    @apply bg-slate-800 dark:bg-slate-950 text-slate-100 rounded-lg p-4 overflow-x-auto my-4;
+  }
+
+  .prose code {
+    @apply font-mono text-sm;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-primary pl-4 italic text-slate-600 dark:text-slate-400;
+  }
+
+  .prose ul {
+    @apply list-disc list-inside mb-4;
+  }
+
+  .prose ol {
+    @apply list-decimal list-inside mb-4;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+
+  .prose img {
+    @apply rounded-lg my-6;
+  }
+
+  .prose table {
+    @apply w-full border-collapse my-6;
+  }
+
+  .prose th {
+    @apply bg-slate-100 dark:bg-slate-800 px-4 py-2 text-left font-semibold;
+  }
+
+  .prose td {
+    @apply border border-slate-200 dark:border-slate-700 px-4 py-2;
+  }
+}
